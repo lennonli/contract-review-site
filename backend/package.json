@@ -1,0 +1,28 @@
+{
+  "name": "contract-review-backend",
+  "version": "1.0.0",
+  "description": "Backend service for AI-powered contract review",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["contract", "review", "ai", "llm"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "dotenv": "^16.3.1",
+    "axios": "^1.6.2",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "docx": "^8.5.0",
+    "html-pdf-node": "^1.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

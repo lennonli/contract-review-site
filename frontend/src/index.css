@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  background-color: #F5F5F5;
+  color: #333;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* 极简风格全局样式 */
+.btn-primary {
+  @apply bg-primary-btn text-white px-6 py-3 rounded-lg hover:bg-secondary transition-colors cursor-pointer font-medium;
+}
+
+.btn-secondary {
+  @apply bg-white text-primary-btn border border-primary-btn px-6 py-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer font-medium;
+}
+
+.input-field {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-btn transition-colors;
+}
+
+.panel {
+  @apply bg-white rounded-lg shadow-sm p-6 mb-4;
+}
+
+/* 文件上传区域 */
+.upload-area {
+  @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-primary-btn transition-colors cursor-pointer;
+}
+
+.upload-area.drag-over {
+  @apply border-primary-btn bg-gray-50;
+}
+
+/* 下拉框样式 */
+select {
+  @apply input-field cursor-pointer;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
