@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../utils/api';
-import ModelSelector from '../components/ModelSelector';
 import CollapsiblePanel from '../components/CollapsiblePanel';
 
 function UploadPage() {
     const navigate = useNavigate();
 
-    const [models, setModels] = useState(null);
-    const [templates, setTemplates] = useState([]);
-    const [selectedModel, setSelectedModel] = useState('');
-    const [selectedTemplate, setSelectedTemplate] = useState('private_equity');
+    const [selectedModel, setSelectedModel] = useState('gemini'); // Default model
     const [file, setFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -25,22 +21,10 @@ function UploadPage() {
     });
 
     useEffect(() => {
-        loadData();
         loadApiKeys();
     }, []);
 
-    const loadData = async () => {
-        try {
-            const [modelsRes, templatesRes] = await Promise.all([
-                api.getModels(),
-                api.getTemplates()
-            ]);
-            setModels(modelsRes.models);
-            setTemplates(templatesRes.templates);
-        } catch (err) {
-            setError('加载配置失败: ' + err.message);
-        }
-    };
+
 
     const loadApiKeys = () => {
         const storedKeys = {
@@ -117,11 +101,6 @@ function UploadPage() {
             return;
         }
 
-        if (!selectedModel) {
-            setError('请选择AI模型');
-            return;
-        }
-
         setLoading(true);
         setError('');
 
@@ -135,7 +114,6 @@ function UploadPage() {
                     fileId: uploadResult.fileId,
                     fileName: uploadResult.fileName,
                     contractText: uploadResult.text,
-                    templateId: selectedTemplate,
                     modelKey: selectedModel
                 }
             });
@@ -198,35 +176,7 @@ function UploadPage() {
                     )}
                 </div>
 
-                {/* 模型选择 */}
-                <ModelSelector
-                    models={models}
-                    selectedModel={selectedModel}
-                    onModelChange={setSelectedModel}
-                />
 
-                {/* 审查模板选择 */}
-                <div className="mb-6">
-                    <label className="block text-sm font-medium mb-2 text-gray-700">
-                        审查模板
-                    </label>
-                    <select
-                        value={selectedTemplate}
-                        onChange={(e) => setSelectedTemplate(e.target.value)}
-                        className="w-full"
-                    >
-                        {templates.map(template => (
-                            <option key={template.id} value={template.id}>
-                                {template.name}
-                            </option>
-                        ))}
-                    </select>
-                    {selectedTemplate && templates.find(t => t.id === selectedTemplate) && (
-                        <p className="text-sm text-gray-500 mt-2">
-                            {templates.find(t => t.id === selectedTemplate).description}
-                        </p>
-                    )}
-                </div>
 
                 {/* API配置面板 */}
                 <CollapsiblePanel title="API配置 (可选)" defaultOpen={false}>
@@ -315,8 +265,8 @@ function UploadPage() {
                 {/* 开始审查按钮 */}
                 <button
                     onClick={handleStartReview}
-                    disabled={loading || !file || !selectedModel}
-                    className={`w-full btn-primary ${(loading || !file || !selectedModel) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={loading || !file}
+                    className={`w-full btn-primary ${(loading || !file) ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                     {loading ? '处理中...' : '开始审查'}
                 </button>
