@@ -20,7 +20,7 @@ function ProcessingPage() {
     }, []);
 
     const startReview = async () => {
-        const { fileId, contractText, templateId, modelKey, fileName } = location.state;
+        const { fileId, contractText, templateId = 'private_equity', modelKey, fileName } = location.state;
 
         try {
             // 模拟进度更新
