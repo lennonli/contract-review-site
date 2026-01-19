@@ -1,4 +1,8 @@
-# 合同审查系统 | Contract Review System
+# 合同审查系统 (Contract Review)
+
+AI驱动的智能合同审查平台。
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/lennonli/contract-review-site)
 
 一个基于AI的智能合同审查平台，支持多种大语言模型（闭源、开源、智源），实现合同自动审查、风险识别和修订建议生成。
 
@@ -30,6 +34,20 @@
 - **路由**: React Router DOM
 
 ## 🚀 快速开始
+
+### 1. 部署后端 (推荐)
+点击上方按钮，一键将后端部署到 Railway：
+- 自动配置 Node.js 环境
+- 自动设置子目录路径
+- 部署成功后，获取生成的公共域名 (e.g. `https://xxx.up.railway.app`)
+
+### 2. 配置前端
+1. 编辑 `frontend/.env.production`，填入您的后端 URL：
+   ```bash
+   VITE_API_URL=https://您的Railway域名.up.railway.app
+   ```
+2. 提交并推送代码到 GitHub。
+3. GitHub Actions 会自动将前端部署到 GitHub Pages。
 
 ### 前置要求
 
