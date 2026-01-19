@@ -29,7 +29,7 @@ jobs:
 
       - name: Build and Push Container
         run: |-
-          gcloud builds submit --tag gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }} ./backend
+          gcloud builds submit --tag gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }} ./backend --no-user-output-enabled
 
       - name: Deploy to Cloud Run
         run: |-
