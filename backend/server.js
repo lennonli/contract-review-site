@@ -27,7 +27,13 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // 中间件
-app.use(cors());
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || 'https://lennonli.github.io',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Gemini-API-Key', 'X-Claude-API-Key', 'X-OpenAI-API-Key', 'X-ZhiPu-API-Key']
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // 文件上传配置
