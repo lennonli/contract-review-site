@@ -16,8 +16,17 @@ function UploadPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    // API Keys state
+    const [apiKeys, setApiKeys] = useState({
+        gemini: '',
+        claude: '',
+        openai: '',
+        zhipu: ''
+    });
+
     useEffect(() => {
         loadData();
+        loadApiKeys();
     }, []);
 
     const loadData = async () => {
@@ -31,6 +40,35 @@ function UploadPage() {
         } catch (err) {
             setError('加载配置失败: ' + err.message);
         }
+    };
+
+    const loadApiKeys = () => {
+        const storedKeys = {
+            gemini: localStorage.getItem('api_key_gemini') || '',
+            claude: localStorage.getItem('api_key_claude') || '',
+            openai: localStorage.getItem('api_key_openai') || '',
+            zhipu: localStorage.getItem('api_key_zhipu') || ''
+        };
+        setApiKeys(storedKeys);
+    };
+
+    const handleApiKeyChange = (provider, value) => {
+        const newKeys = { ...apiKeys, [provider]: value };
+        setApiKeys(newKeys);
+        localStorage.setItem(`api_key_${provider}`, value);
+    };
+
+    const handleClearAllKeys = () => {
+        localStorage.removeItem('api_key_gemini');
+        localStorage.removeItem('api_key_claude');
+        localStorage.removeItem('api_key_openai');
+        localStorage.removeItem('api_key_zhipu');
+        setApiKeys({
+            gemini: '',
+            claude: '',
+            openai: '',
+            zhipu: ''
+        });
     };
 
     const handleDragOver = (e) => {
@@ -192,11 +230,69 @@ function UploadPage() {
 
                 {/* API配置面板 */}
                 <CollapsiblePanel title="API配置 (可选)" defaultOpen={false}>
-                    <div className="text-sm text-gray-600 space-y-2">
-                        <p>• 如需配置API密钥，请在后端 .env 文件中设置</p>
-                        <p>• <strong>闭源模型</strong>: Gemini、Claude 需各自的API密钥</p>
-                        <p>• <strong>智源模型</strong>: ZhiPu GLM-4 需单独配置 (格式: id.secret)</p>
-                        <p>• <strong>开源模型</strong>: 支持 Together AI、Anyscale 等平台</p>
+                    <div className="space-y-4">
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
+                            ⚠️ <strong>安全提示</strong>: API密钥将保存在浏览器本地存储中。请勿在公共设备上使用。
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-1 text-gray-700">
+                                Gemini API Key
+                            </label>
+                            <input
+                                type="password"
+                                value={apiKeys.gemini}
+                                onChange={(e) => handleApiKeyChange('gemini', e.target.value)}
+                                placeholder="输入 Gemini API 密钥"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-btn focus:border-transparent"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-1 text-gray-700">
+                                Claude API Key
+                            </label>
+                            <input
+                                type="password"
+                                value={apiKeys.claude}
+                                onChange={(e) => handleApiKeyChange('claude', e.target.value)}
+                                placeholder="输入 Claude API 密钥"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-btn focus:border-transparent"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-1 text-gray-700">
+                                OpenAI API Key
+                            </label>
+                            <input
+                                type="password"
+                                value={apiKeys.openai}
+                                onChange={(e) => handleApiKeyChange('openai', e.target.value)}
+                                placeholder="输入 OpenAI API 密钥"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-btn focus:border-transparent"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium mb-1 text-gray-700">
+                                ZhiPu GLM API Key
+                            </label>
+                            <input
+                                type="password"
+                                value={apiKeys.zhipu}
+                                onChange={(e) => handleApiKeyChange('zhipu', e.target.value)}
+                                placeholder="输入智谱 API 密钥 (格式: id.secret)"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-btn focus:border-transparent"
+                            />
+                        </div>
+
+                        <button
+                            onClick={handleClearAllKeys}
+                            className="text-sm text-red-600 hover:text-red-800 hover:underline"
+                        >
+                            🗑️ 清除所有API密钥
+                        </button>
                     </div>
                 </CollapsiblePanel>
 
