@@ -36,15 +36,23 @@ AI驱动的智能合同审查平台。
 ## 🚀 快速开始
 
 ### 1. 部署后端 (推荐)
-点击上方按钮，一键将后端部署到 Railway：
-- 自动配置 Node.js 环境
-- 自动设置子目录路径
-- 部署成功后，获取生成的公共域名 (e.g. `https://xxx.up.railway.app`)
+您可以选择以下任一平台部署后端：
+
+#### 方案 A: Railway (若可用)
+点击下方按钮：
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/lennonli/contract-review-site)
+
+#### 方案 B: Render (免费稳定)
+1. 访问 [Render.com](https://render.com) 并连接 GitHub 仓库。
+2. 创建 **Web Service**，设置 **Root Directory** 为 `backend`。
+3. 构建命令为 `npm install`，启动命令为 `npm start`。
+4. 环境变量设置 `FRONTEND_URL=https://lennonli.github.io`。
 
 ### 2. 配置前端
-1. 编辑 `frontend/.env.production`，填入您的后端 URL：
+1. 部署成功后，获取后端生成的公共域名 (e.g. `https://xxx.onrender.com`)。
+2. 编辑 `frontend/.env.production`，填入您的后端 URL：
    ```bash
-   VITE_API_URL=https://您的Railway域名.up.railway.app
+   VITE_API_URL=https://您的后端域名
    ```
 2. 提交并推送代码到 GitHub。
 3. GitHub Actions 会自动将前端部署到 GitHub Pages。
