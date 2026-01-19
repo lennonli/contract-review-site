@@ -5,7 +5,7 @@ import ResultsPage from './pages/ResultsPage'
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/contract-review-site">
             <Routes>
                 <Route path="/" element={<UploadPage />} />
                 <Route path="/processing" element={<ProcessingPage />} />
